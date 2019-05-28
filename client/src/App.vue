@@ -1,12 +1,22 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-    </div>
-    <router-view/>
+    <component :is="layout">
+      <router-view/>
+    </component>
   </div>
 </template>
 
-<style lang="scss">
+<script>
+const layout = "default";
+export default {
+  name: 'App',
+  computed: {
+    layout() {
+        return (this.$route.meta.layout || layout) + '-layout';
+    },
+  }
+}
+</script>
 
-</style>
+
+<style src="./assets/css/main.scss" lang="scss" />

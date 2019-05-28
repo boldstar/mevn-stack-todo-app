@@ -1,12 +1,13 @@
 <template>
-  <div class="home">
-    <h1>Hello</h1>
-  </div>
+    <Todos />
 </template>
 
 <script>
-
+import Todos from '@/components/Todos'
 export default {
-  name: 'home',
+  name: 'Home',
+  components: {
+    Todos
+  }
 }
 </script>
