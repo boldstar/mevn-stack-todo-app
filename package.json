@@ -15,9 +15,9 @@
   "scripts": {
     "client-install": "npm install --prefix client",
     "server": "cd src && nodemon index",
-    "client": "npm start --prefix client",
+    "client": "npm run serve --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "node index"
+    "start": "cd src && node index"
   },
   "keywords": [],
   "author": "",
