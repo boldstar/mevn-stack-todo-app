@@ -39,8 +39,9 @@ body {
     .todo-input {
         width: 100%;
         border: 1px solid var(--alt);
+        border-radius: 2px 2px 0 0;
         height: 40px;
-        padding: 20px;
+        padding: 25px 10px;
         font-size: 1.25rem;
         box-sizing: border-box;
         background: #383838;
@@ -58,6 +59,7 @@ body {
             padding: 10px;
             color: var(--dark);
             border-left: 10px solid var(--alt);
+            border-bottom: 1px solid var(--alt);
             font-weight: bold;
             display: flex;
             justify-content: space-between;

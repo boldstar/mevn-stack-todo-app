@@ -1,8 +1,11 @@
 const express = require('express')
+const cors = require('cors')
 const path = require('path')
 const {connectDb} = require('./models')
 
 const app = express();
+// Cross origin access headers handler
+app.use(cors())
 // Body parser for sending data to view
 app.use(express.json())
 // Handle form submissions
