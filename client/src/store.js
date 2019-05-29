@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import toast from './plugins/toast'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 Vue.use(Vuex)
@@ -25,21 +26,10 @@ export default new Vuex.Store({
       const index = state.todos.findIndex(item => item._id == todo._id)
       state.todos.splice(index, 1, todo)
     },
-    UPDATE_BATCH(state, todos) {
-      for(var i = 0; i < state.todos.length; i++) {
-        var t = state.todos[i]._id
-        if(t === todos[i]) {
-          
-        }
-      }
-    },
     DELETE_TODO(state, id) {
       const index = state.todos.findIndex(todo => todo._id == id)
       state.todos.splice(index, 1)
     },
-    DELETE_BATCH(state, todos) {
-
-    }
   },
   actions: {
     getTodos(context) {
@@ -54,7 +44,8 @@ export default new Vuex.Store({
     addTodo(context, todo) {
       axios.post('/api/todos', {todo: todo})
       .then(response => {
-        context.commit('ADD_TODO', response.data)
+        context.commit('ADD_TODO', response.data.todo)
+        toast.success(response.data.msg)
       })
       .catch(err => {
         console.log(err.response.data)
@@ -64,6 +55,7 @@ export default new Vuex.Store({
       axios.put('/api/todos/' + todo._id, todo)
       .then(response => {
         context.commit('UPDATE_TODO', response.data.todo)
+        toast.success(response.data.msg)
       })
       .catch(err => {
         console.log(err.response.data)
@@ -73,6 +65,7 @@ export default new Vuex.Store({
       axios.put('/api/todos/complete/' + todo)
       .then(response => {
         context.commit('UPDATE_TODO', response.data.todo)
+        toast.success(response.data.msg)
       })
       .catch(err => {
         console.log(err.response.data)
@@ -82,6 +75,7 @@ export default new Vuex.Store({
       axios.post('/api/todos/complete', todos)
       .then(response => {
         context.commit('SET_TODOS', response.data.todos)
+        toast.success(response.data.msg)
       })
       .catch(err => {
         console.log(err.response.data)
@@ -91,6 +85,7 @@ export default new Vuex.Store({
       axios.delete('/api/todos/' + todo)
       .then(response => {
         context.commit('DELETE_TODO', todo)
+        toast.success(response.data.msg)
       })
       .catch(err => {
         console.log(err.response.data)
@@ -100,6 +95,7 @@ export default new Vuex.Store({
       axios.post('/api/todos/delete-batch', todos)
       .then(response => {
         context.commit('SET_TODOS', response.data.todos)
+        toast.success(response.data.msg)
       })
       .catch(err => {
         console.log(err.response.data)
