@@ -125,6 +125,8 @@ created() {
     font-size: 1rem;
     font-weight: bold;
     background: var(--light);
+    color: var(--dark);
+    transition: background .5s;
 }
 
 .input-focus {

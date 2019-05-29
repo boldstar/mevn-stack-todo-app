@@ -14,6 +14,7 @@ body {
     color: var(--light);
     min-height: 100vh;
     font-family: 'Mandali', sans-serif;
+    transition: background .5s;
 }
 
 .default-layout {
@@ -40,17 +41,26 @@ header {
     justify-content: space-between;
     background: var(--dark);
     color: var(--light);
-    padding: 10px 20px;
+    padding: 10px 50px;
     box-sizing: border-box;
+    transition: background .5s;
 
     .logo {
-        color: white;
+        color: var(--light);
+        font-size: 1.25rem;
+        font-weight: bold;
+
+        .fa-list-alt {
+            margin-right: 5px;
+        }
     }
 
     nav {
+        display: flex;
 
         a {
             color: white;
+            align-self: center;
         }
     }
 }
@@ -94,6 +104,7 @@ header {
             font-weight: bold;
             display: flex;
             justify-content: space-between;
+            transition: background .5s;
 
             .todo-right {
 
