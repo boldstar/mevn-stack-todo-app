@@ -29,6 +29,32 @@ body {
     margin: 0 auto;
 }
 
+a {
+    text-decoration: none;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background: var(--dark);
+    color: var(--light);
+    padding: 10px 20px;
+    box-sizing: border-box;
+
+    .logo {
+        color: white;
+    }
+
+    nav {
+
+        a {
+            color: white;
+        }
+    }
+}
+
 .todos {
     margin: 0 auto;
     margin-top: 100px;
