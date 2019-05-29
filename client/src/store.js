@@ -25,9 +25,20 @@ export default new Vuex.Store({
       const index = state.todos.findIndex(item => item._id == todo._id)
       state.todos.splice(index, 1, todo)
     },
+    UPDATE_BATCH(state, todos) {
+      for(var i = 0; i < state.todos.length; i++) {
+        var t = state.todos[i]._id
+        if(t === todos[i]) {
+          
+        }
+      }
+    },
     DELETE_TODO(state, id) {
       const index = state.todos.findIndex(todo => todo._id == id)
       state.todos.splice(index, 1)
+    },
+    DELETE_BATCH(state, todos) {
+
     }
   },
   actions: {
@@ -67,10 +78,28 @@ export default new Vuex.Store({
         console.log(err.response.data)
       })
     },
+    completeBatch(context, todos) {
+      axios.post('/api/todos/complete', todos)
+      .then(response => {
+        context.commit('SET_TODOS', response.data.todos)
+      })
+      .catch(err => {
+        console.log(err.response.data)
+      })
+    },
     deleteTodo(context, todo) {
       axios.delete('/api/todos/' + todo)
       .then(response => {
         context.commit('DELETE_TODO', todo)
+      })
+      .catch(err => {
+        console.log(err.response.data)
+      })
+    },
+    deleteBatch(context, todos) {
+      axios.post('/api/todos/delete-batch', todos)
+      .then(response => {
+        context.commit('SET_TODOS', response.data.todos)
       })
       .catch(err => {
         console.log(err.response.data)

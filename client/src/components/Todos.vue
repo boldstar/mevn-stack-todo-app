@@ -22,8 +22,8 @@
                 <button type="btn" class="todo-batch-btn" @click="batch = !batch">Batch Action</button>
             </div>
             <div>
-                <button type="btn" class="todo-batch-btn">Complete</button>
-                <button type="btn" class="todo-batch-btn delete-batch-btn">Delete</button>
+                <button type="btn" class="todo-batch-btn" @click="completeBatch">Complete</button>
+                <button type="btn" class="todo-batch-btn delete-batch-btn" @click="deleteBatch">Delete</button>
             </div>
         </div>
     </div>
@@ -32,62 +32,76 @@
 <script>
 import {mapGetters} from 'vuex'
 export default {
- name: 'Todos',
- data() {
-     return {
-         newTodo: '',
-         batch: false,
-         batchTodos: [],
-         todoBlur: false,
-         todoSelected: null
-     }
- },
- computed: {
-     ...mapGetters(['todos'])
- },
- methods: {
-     addTodo() {
-         if(!this.newTodo) return;
-         this.$store.dispatch('addTodo', this.newTodo)
-         .then(() => {
-             this.newTodo = ''
-         })
-     },
-     deleteTodo(todo) {
-        this.$store.dispatch('deleteTodo', todo)
-     },
-     selectTodo(todo) {
-        if(this.batchTodos.includes(todo)) {
-            const index = this.batchTodos.findIndex(todo => todo._id == todo)
-            this.batchTodos.splice(index, 1)
-        } else {
-            this.batchTodos.push(todo)
-        }
-     },
-     editTodo(todo, index) {
-         this.todoBlur = true
-         this.todoSelected = todo
-         this.$refs.input[index].focus()
-     },
-     removeFocus() {
-         this.todoBlur = false
-         this.todoSelected = null
-     },
-     saveEdit(index) {
-         this.$store.dispatch('updateTodo', this.todos[index])
-         .then(() => {
-             this.todoBlur = false
-             this.todoSelected = null
-             this.$refs.input[index].blur()
-         })
-     },
-     completeTodo(todo) {
-         this.$store.dispatch('completeTodo', todo)
-     }
- },
- created() {
+name: 'Todos',
+data() {
+    return {
+        newTodo: '',
+        batch: false,
+        batchTodos: [],
+        todoBlur: false,
+        todoSelected: null
+    }
+},
+computed: {
+    ...mapGetters(['todos'])
+},
+methods: {
+    addTodo() {
+        if(!this.newTodo) return;
+        this.$store.dispatch('addTodo', this.newTodo)
+        .then(() => {
+            this.newTodo = ''
+        })
+    },
+    deleteTodo(todo) {
+    this.$store.dispatch('deleteTodo', todo)
+    },
+    selectTodo(todo) {
+    if(this.batchTodos.includes(todo)) {
+        const index = this.batchTodos.findIndex(todo => todo._id == todo)
+        this.batchTodos.splice(index, 1)
+    } else {
+        this.batchTodos.push(todo)
+    }
+    },
+    editTodo(todo, index) {
+        this.todoBlur = true
+        this.todoSelected = todo
+        this.$refs.input[index].focus()
+    },
+    removeFocus() {
+        this.todoBlur = false
+        this.todoSelected = null
+    },
+    saveEdit(index) {
+        this.$store.dispatch('updateTodo', this.todos[index])
+        .then(() => {
+            this.todoBlur = false
+            this.todoSelected = null
+            this.$refs.input[index].blur()
+        })
+    },
+    completeTodo(todo) {
+        this.$store.dispatch('completeTodo', todo)
+    },
+    completeBatch() {
+        this.$store.dispatch('completeBatch', this.batchTodos)
+        .then(() => {
+            this.batchTodos = []
+            this.batch = false
+        })
+    },
+    deleteBatch() {
+        this.$store.dispatch('deleteBatch', this.batchTodos)
+        .then(() => {
+            this.batchTodos = []
+            this.batch = false
+        })
+    }
+},
+created() {
      this.$store.dispatch('getTodos')
- }
+}
 }
 </script>
 
