@@ -22,11 +22,11 @@ export default new Vuex.Store({
       state.todos.push(todo)
     },
     UPDATE_TODO(state, todo) {
-      const index = state.todos.findIndex(item => item.id == todo.id)
+      const index = state.todos.findIndex(item => item._id == todo._id)
       state.todos.splice(index, 1, todo)
     },
     DELETE_TODO(state, id) {
-      const index = state.todos.findIndex(todo => todo.id == id)
+      const index = state.todos.findIndex(todo => todo._id == id)
       state.todos.splice(index, 1)
     }
   },
@@ -50,9 +50,18 @@ export default new Vuex.Store({
       })
     },
     updateTodo(context, todo) {
-      axios.put('/api/todos/' + todo.id, todo)
+      axios.put('/api/todos/' + todo._id, todo)
       .then(response => {
-        context.commit('UPDATE_TODO', response.data)
+        context.commit('UPDATE_TODO', response.data.todo)
+      })
+      .catch(err => {
+        console.log(err.response.data)
+      })
+    },
+    completeTodo(context, todo) {
+      axios.put('/api/todos/complete/' + todo)
+      .then(response => {
+        context.commit('UPDATE_TODO', response.data.todo)
       })
       .catch(err => {
         console.log(err.response.data)

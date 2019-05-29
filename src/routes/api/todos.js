@@ -52,6 +52,18 @@ router.put('/:id', (req, res) => {
     }).catch(err => res.status(400).json({msg: 'Oops no record found'}))
 })
 
+
+// @route   PUT api/todos/complete/:id
+// @desc    Complete record by id
+// @access  Public
+router.put('/complete/:id', (req, res) => {
+    Todo.findOne({ _id: req.params.id}).then(todo => {
+        todo.complete = !todo.complete
+        todo.save()
+        res.json({msg: 'Todo updated', todo})
+    }).catch(err => res.status(400).json({msg: 'Oops no record found'}))
+})
+
 // @route   DELETE api/todos/:id
 // @desc    Delete todo by id
 // @access  Public
